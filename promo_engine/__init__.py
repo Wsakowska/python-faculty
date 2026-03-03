@@ -1,0 +1,1 @@
+"""Silnik promocji dla sklepu internetowego."""
