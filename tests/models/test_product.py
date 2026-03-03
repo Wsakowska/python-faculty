@@ -2,7 +2,7 @@ import pytest
 from decimal import Decimal
 
 from enums import VatRate
-from tests.models.product import Product
+from promo_engine.models.product import Product
 
 
 class TestProductValidation:
