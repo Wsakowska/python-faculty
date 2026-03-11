@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
 
-from promo_engine.models.enums import VatRate
-from promo_engine.models.product import Product
+from Zad1.promo_engine.models.enums import VatRate
+from Zad1.promo_engine.models.product import Product
 
 
 @dataclass

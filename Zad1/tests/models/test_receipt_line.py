@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from promo_engine.models import Product, ReceiptLine, VatRate
+from Zad1.promo_engine.models import Product, ReceiptLine, VatRate
 
 
 def _product(**kw) -> Product:

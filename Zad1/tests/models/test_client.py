@@ -1,6 +1,6 @@
 import pytest
 
-from promo_engine.models import Client, LoyaltyLevel
+from Zad1.promo_engine.models import Client, LoyaltyLevel
 
 
 class TestClientValidation:

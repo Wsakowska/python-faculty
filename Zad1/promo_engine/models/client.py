@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from promo_engine.models.enums import LoyaltyLevel
+from Zad1.promo_engine.models.enums import LoyaltyLevel
 
 
 @dataclass(frozen=True)
