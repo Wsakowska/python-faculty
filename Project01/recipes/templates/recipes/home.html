@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Strona główna — Co mam w lodówce?{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 mb-3">
+        <i class="bi bi-egg-fried text-success"></i> Co mam w lodówce?
+    </h1>
+    <p class="lead text-muted mb-4">
+        Wpisz składniki, które masz pod ręką, a my znajdziemy dla Ciebie idealne przepisy!
+    </p>
+    <a href="#" class="btn btn-success btn-lg">
+        <i class="bi bi-search"></i> Szukaj przepisów
+    </a>
+</div>
+
+<div class="row text-center mt-5">
+    <div class="col-md-4">
+        <i class="bi bi-basket2-fill text-success" style="font-size: 3rem;"></i>
+        <h3 class="mt-3">Wpisz składniki</h3>
+        <p class="text-muted">Zaznacz co masz w lodówce i spiżarni.</p>
+    </div>
+    <div class="col-md-4">
+        <i class="bi bi-book text-success" style="font-size: 3rem;"></i>
+        <h3 class="mt-3">Znajdź przepisy</h3>
+        <p class="text-muted">Otrzymaj listę przepisów dopasowanych do Twoich składników.</p>
+    </div>
+    <div class="col-md-4">
+        <i class="bi bi-star-fill text-success" style="font-size: 3rem;"></i>
+        <h3 class="mt-3">Gotuj i oceniaj</h3>
+        <p class="text-muted">Wypróbuj przepisy i podziel się opinią z innymi.</p>
+    </div>
+</div>
+{% endblock %}
