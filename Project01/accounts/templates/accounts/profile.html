@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil — Co mam w lodówce?{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">
+            <i class="bi bi-person-circle text-success"></i> Profil: {{ user.username }}
+        </h2>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Edytuj profil</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.bio.id_for_label }}" class="form-label">O mnie</label>
+                        <textarea name="{{ form.bio.html_name }}"
+                                  id="{{ form.bio.id_for_label }}"
+                                  class="form-control"
+                                  rows="3">{{ form.bio.value|default:'' }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Preferencje dietetyczne</label>
+                        <div>
+                            {% for checkbox in form.dietary_preferences %}
+                                <div class="form-check">
+                                    {{ checkbox }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                </form>
+            </div>
+        </div>
+
+        {% if profile.favorite_recipes.exists %}
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="card-title">Ulubione przepisy</h5>
+                <ul class="list-group list-group-flush">
+                    {% for recipe in profile.favorite_recipes.all %}
+                        <li class="list-group-item">
+                            <a href="#">{{ recipe.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
