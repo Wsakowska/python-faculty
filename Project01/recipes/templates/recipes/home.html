@@ -10,9 +10,16 @@
     <p class="lead text-muted mb-4">
         Wpisz składniki, które masz pod ręką, a my znajdziemy dla Ciebie idealne przepisy!
     </p>
-    <a href="#" class="btn btn-success btn-lg">
-        <i class="bi bi-search"></i> Szukaj przepisów
-    </a>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'recipes:recipe_list' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-book"></i> Przeglądaj przepisy
+        </a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'recipes:recipe_create' %}" class="btn btn-outline-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Dodaj przepis
+        </a>
+        {% endif %}
+    </div>
 </div>
 
 <div class="row text-center mt-5">
@@ -32,4 +39,39 @@
         <p class="text-muted">Wypróbuj przepisy i podziel się opinią z innymi.</p>
     </div>
 </div>
+
+{% if latest_recipes %}
+<h2 class="mt-5 mb-4">Najnowsze przepisy</h2>
+<div class="row">
+    {% for recipe in latest_recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}"
+                     style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                     style="height: 200px;">
+                    <i class="bi bi-camera text-muted" style="font-size: 3rem;"></i>
+                </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text text-muted">{{ recipe.description|truncatewords:15 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-success">{{ recipe.get_difficulty_display }}</span>
+                    <small class="text-muted">
+                        <i class="bi bi-clock"></i> {{ recipe.prep_time }} min
+                    </small>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'recipes:recipe_detail' recipe.slug %}"
+                   class="btn btn-outline-success w-100">Zobacz przepis</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

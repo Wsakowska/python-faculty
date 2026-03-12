@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Przepisy — Co mam w lodówce?{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        {% if active_category %}
+            Przepisy: {{ active_category.name }}
+        {% else %}
+            Wszystkie przepisy
+        {% endif %}
+    </h2>
+    {% if user.is_authenticated %}
+    <a href="{% url 'recipes:recipe_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Dodaj przepis
+    </a>
+    {% endif %}
+</div>
+
+<!-- Filtrowanie po kategorii -->
+<div class="mb-4">
+    <a href="{% url 'recipes:recipe_list' %}"
+       class="btn btn-sm {% if not active_category %}btn-success{% else %}btn-outline-success{% endif %} me-1">
+        Wszystkie
+    </a>
+    {% for category in categories %}
+    <a href="{% url 'recipes:recipe_list' %}?kategoria={{ category.slug }}"
+       class="btn btn-sm {% if active_category == category %}btn-success{% else %}btn-outline-success{% endif %} me-1">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+</div>
+
+{% if recipes %}
+<div class="row">
+    {% for recipe in recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}"
+                     style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                     style="height: 200px;">
+                    <i class="bi bi-camera text-muted" style="font-size: 3rem;"></i>
+                </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text text-muted">{{ recipe.description|truncatewords:15 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-success">{{ recipe.get_difficulty_display }}</span>
+                    <small class="text-muted">
+                        <i class="bi bi-clock"></i> {{ recipe.prep_time }} min
+                    </small>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{% url 'recipes:recipe_detail' recipe.slug %}"
+                   class="btn btn-outline-success w-100">Zobacz przepis</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-emoji-frown text-muted" style="font-size: 3rem;"></i>
+    <p class="text-muted mt-3">Brak przepisów w tej kategorii.</p>
+</div>
+{% endif %}
+{% endblock %}

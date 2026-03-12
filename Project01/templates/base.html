@@ -30,6 +30,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'recipes:home' %}">Strona główna</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'recipes:recipe_list' %}">Przepisy</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'recipes:recipe_create' %}">
+                            <i class="bi bi-plus-circle"></i> Dodaj przepis
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
