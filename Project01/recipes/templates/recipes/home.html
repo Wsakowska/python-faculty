@@ -11,7 +11,10 @@
         Wpisz składniki, które masz pod ręką, a my znajdziemy dla Ciebie idealne przepisy!
     </p>
     <div class="d-flex justify-content-center gap-3">
-        <a href="{% url 'recipes:recipe_list' %}" class="btn btn-success btn-lg">
+        <a href="{% url 'recipes:recipe_search' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-search"></i> Szukaj przepisów
+        </a>
+        <a href="{% url 'recipes:recipe_list' %}" class="btn btn-outline-success btn-lg">
             <i class="bi bi-book"></i> Przeglądaj przepisy
         </a>
         {% if user.is_authenticated %}

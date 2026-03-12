@@ -3,9 +3,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import models
+from django.db.models import Count
 from .models import Recipe, Category
-from .forms import RecipeForm, RecipeIngredientFormSet
-
+from .forms import RecipeForm, RecipeIngredientFormSet, IngredientSearchForm
 
 def home(request):
     """Strona główna — najnowsze przepisy."""
@@ -118,3 +119,34 @@ def recipe_delete(request, slug):
     return render(request, 'recipes/recipe_confirm_delete.html', {
         'recipe': recipe,
     })
+
+def recipe_search(request):
+    """Wyszukiwanie przepisów po składnikach — główna funkcja aplikacji."""
+    form = IngredientSearchForm(request.GET or None)
+    recipes = None
+    selected_count = 0
+
+    if form.is_valid():
+        selected_ingredients = form.cleaned_data['ingredients']
+        selected_count = selected_ingredients.count()
+
+        # Znajdź przepisy, które zawierają KTÓRYKOLWIEK z wybranych składników
+        # i posortuj wg liczby pasujących składników (najlepsze dopasowanie na górze)
+        recipes = (
+            Recipe.objects
+            .filter(is_published=True, ingredients__in=selected_ingredients)
+            .annotate(
+                matched=Count('ingredients', filter=models.Q(
+                    ingredients__in=selected_ingredients
+                )),
+                total_ingredients=Count('recipe_ingredients'),
+            )
+            .order_by('-matched')
+            .distinct()
+        )
+
+    return render(request, 'recipes/recipe_search.html', {
+        'form': form,
+        'recipes': recipes,
+        'selected_count': selected_count,
+})

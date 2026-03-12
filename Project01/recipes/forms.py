@@ -41,3 +41,11 @@ RecipeIngredientFormSet = forms.inlineformset_factory(
     extra=5,
     can_delete=True,
 )
+
+class IngredientSearchForm(forms.Form):
+    """Formularz wyszukiwania przepisów po składnikach."""
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label='Zaznacz składniki, które masz',
+)
