@@ -54,19 +54,55 @@
 </div>
 
 <!-- Komentarze — na razie placeholder -->
+<!-- Komentarze -->
 <div class="mt-5">
     <h4>Komentarze ({{ comments|length }})</h4>
     <hr>
+
+    {% if user.is_authenticated %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Dodaj komentarz</h5>
+            <form method="post" action="{% url 'comments:add_comment' recipe.slug %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ comment_form.rating.id_for_label }}" class="form-label">
+                        Ocena
+                    </label>
+                    {{ comment_form.rating }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ comment_form.content.id_for_label }}" class="form-label">
+                        Komentarz
+                    </label>
+                    {{ comment_form.content }}
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-chat-dots"></i> Dodaj komentarz
+                </button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">
+        <a href="{% url 'accounts:login' %}">Zaloguj się</a>, żeby dodać komentarz.
+    </p>
+    {% endif %}
+
     {% for comment in comments %}
-    <div class="mb-3">
-        <strong>{{ comment.author.username }}</strong>
-        <span class="text-warning">
-            {% for i in "12345" %}
-                {% if forloop.counter <= comment.rating %}★{% else %}☆{% endif %}
-            {% endfor %}
-        </span>
-        <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
-        <p>{{ comment.content }}</p>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <strong>{{ comment.author.username }}</strong>
+                <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+            </div>
+            <div class="text-warning my-1">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= comment.rating %}★{% else %}☆{% endif %}
+                {% endfor %}
+            </div>
+            <p class="mb-0">{{ comment.content }}</p>
+        </div>
     </div>
     {% empty %}
     <p class="text-muted">Brak komentarzy. Bądź pierwszy!</p>

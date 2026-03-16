@@ -39,13 +39,16 @@ def recipe_list(request):
 
 def recipe_detail(request, slug):
     """Szczegóły przepisu."""
+    from comments.forms import CommentForm
     recipe = get_object_or_404(Recipe, slug=slug, is_published=True)
     ingredients = recipe.recipe_ingredients.select_related('ingredient').all()
     comments = recipe.comments.select_related('author').all()
+    comment_form = CommentForm()
     return render(request, 'recipes/recipe_detail.html', {
         'recipe': recipe,
         'ingredients': ingredients,
         'comments': comments,
+        'comment_form': comment_form,
     })
 
 
