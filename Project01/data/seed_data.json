@@ -1,0 +1,226 @@
+{
+  "categories": [
+    {"name": "Śniadanie", "description": "Przepisy na dobry początek dnia"},
+    {"name": "Obiad", "description": "Dania główne na obiad"},
+    {"name": "Kolacja", "description": "Lekkie przepisy na wieczór"},
+    {"name": "Deser", "description": "Słodkości i wypieki"},
+    {"name": "Przekąska", "description": "Szybkie przekąski na każdą okazję"},
+    {"name": "Zupa", "description": "Rozgrzewające zupy"},
+    {"name": "Sałatka", "description": "Świeże i zdrowe sałatki"}
+  ],
+  "dietary_preferences": [
+    "Wegetariańskie",
+    "Wegańskie",
+    "Bezglutenowe",
+    "Bez laktozy",
+    "Niskokaloryczne",
+    "Wysokobiałkowe"
+  ],
+  "recipes": [
+    {
+      "title": "Jajecznica na maśle",
+      "description": "Klasyczna, puszysta jajecznica — idealna na szybkie śniadanie.",
+      "instructions": "1. Roztop masło na patelni na średnim ogniu.\n2. Rozbij jajka do miski, dodaj sól i pieprz.\n3. Wlej jajka na patelnię i mieszaj delikatnie łopatką.\n4. Smaż 2-3 minuty, aż jajka się zetną, ale będą jeszcze wilgotne.\n5. Podawaj od razu na ciepłym talerzu.",
+      "category": "Śniadanie",
+      "prep_time": 10,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "jajko", "amount": 3},
+        {"name": "masło", "amount": 15},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Naleśniki z bananami",
+      "description": "Cienkie naleśniki z karmelizowanymi bananami i miodem.",
+      "instructions": "1. Wymieszaj mąkę, jajka, mleko i szczyptę soli na gładkie ciasto.\n2. Rozgrzej patelnię z odrobiną masła.\n3. Smaż cienkie naleśniki po ok. 1-2 minuty z każdej strony.\n4. Banana pokrój w plastry i podsmaż na maśle z miodem.\n5. Zawiń banany w naleśniki i polej miodem.",
+      "category": "Śniadanie",
+      "prep_time": 25,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "mąka pszenna", "amount": 200},
+        {"name": "jajko", "amount": 2},
+        {"name": "mleko", "amount": 300},
+        {"name": "masło", "amount": 20},
+        {"name": "banan", "amount": 2},
+        {"name": "miód", "amount": 2},
+        {"name": "sól", "amount": 1}
+      ]
+    },
+    {
+      "title": "Kurczak z ryżem i warzywami",
+      "description": "Szybki i sycący obiad — smażony kurczak z ryżem i kolorowymi warzywami.",
+      "instructions": "1. Ugotuj ryż zgodnie z instrukcją na opakowaniu.\n2. Pierś z kurczaka pokrój w kostkę, przypraw solą i pieprzem.\n3. Na dużej patelni rozgrzej oliwę, podsmaż kurczaka 5-6 minut.\n4. Dodaj pokrojoną w kostkę paprykę i cebulę, smaż 3 minuty.\n5. Dodaj ryż na patelnię, wymieszaj.\n6. Dopraw sosem sojowym i podawaj.",
+      "category": "Obiad",
+      "prep_time": 35,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "pierś z kurczaka", "amount": 300},
+        {"name": "ryż", "amount": 200},
+        {"name": "papryka czerwona", "amount": 1},
+        {"name": "cebula", "amount": 1},
+        {"name": "oliwa z oliwek", "amount": 2},
+        {"name": "sos sojowy", "amount": 2},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Makaron z sosem pomidorowym",
+      "description": "Prosty, włoski klasyk — makaron w aromatycznym sosie ze świeżych pomidorów.",
+      "instructions": "1. Ugotuj makaron al dente w osolonej wodzie.\n2. Na patelni rozgrzej oliwę, podsmaż pokrojoną cebulę i czosnek.\n3. Dodaj pokrojone pomidory, oregano i bazylię.\n4. Gotuj sos 10 minut na wolnym ogniu.\n5. Dodaj sól i pieprz do smaku.\n6. Wymieszaj makaron z sosem i posyp mozzarellą.",
+      "category": "Obiad",
+      "prep_time": 25,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "makaron", "amount": 250},
+        {"name": "pomidor", "amount": 4},
+        {"name": "cebula", "amount": 1},
+        {"name": "czosnek", "amount": 2},
+        {"name": "oliwa z oliwek", "amount": 2},
+        {"name": "ser mozzarella", "amount": 100},
+        {"name": "oregano", "amount": 1},
+        {"name": "bazylia", "amount": 1},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Placki ziemniaczane",
+      "description": "Chrupiące placki ziemniaczane z dodatkiem cebuli — klasyk kuchni polskiej.",
+      "instructions": "1. Obierz ziemniaki i zetrzyj na tarce o drobnych oczkach.\n2. Odciśnij nadmiar wody z ziemniaków.\n3. Dodaj jajko, mąkę ziemniaczaną, startą cebulę, sól i pieprz.\n4. Wymieszaj i formuj placki.\n5. Smaż na oliwie po 3-4 minuty z każdej strony na złoty kolor.\n6. Podawaj ze śmietaną.",
+      "category": "Obiad",
+      "prep_time": 40,
+      "difficulty": "medium",
+      "ingredients": [
+        {"name": "ziemniak", "amount": 6},
+        {"name": "cebula", "amount": 1},
+        {"name": "jajko", "amount": 1},
+        {"name": "mąka ziemniaczana", "amount": 2},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1},
+        {"name": "oliwa z oliwek", "amount": 3},
+        {"name": "śmietana 18%", "amount": 100}
+      ]
+    },
+    {
+      "title": "Zupa pomidorowa z ryżem",
+      "description": "Domowa zupa pomidorowa z ryżem — ciepła i rozgrzewająca.",
+      "instructions": "1. Na dużym garnku podsmaż pokrojoną cebulę i czosnek na maśle.\n2. Dodaj pokrojone pomidory i marchewkę.\n3. Zalej 1 litrem wody, gotuj 15 minut.\n4. Zblenduj zupę na gładki krem.\n5. Dodaj śmietanę, sól i pieprz.\n6. Ugotuj ryż osobno i dodaj do zupy przy podawaniu.",
+      "category": "Zupa",
+      "prep_time": 35,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "pomidor", "amount": 5},
+        {"name": "marchewka", "amount": 2},
+        {"name": "cebula", "amount": 1},
+        {"name": "czosnek", "amount": 2},
+        {"name": "masło", "amount": 20},
+        {"name": "śmietana 18%", "amount": 100},
+        {"name": "ryż", "amount": 100},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Sałatka grecka",
+      "description": "Świeża, lekka sałatka z pomidorami, ogórkiem i oliwą — idealna na lato.",
+      "instructions": "1. Pokrój pomidory na ćwiartki.\n2. Ogórek pokrój w półplasterki.\n3. Paprykę pokrój w kostkę.\n4. Cebulę pokrój w cienkie piórka.\n5. Wymieszaj warzywa w misce.\n6. Polej oliwą, dopraw oregano, solą i pieprzem.\n7. Wymieszaj delikatnie i podawaj.",
+      "category": "Sałatka",
+      "prep_time": 15,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "pomidor", "amount": 3},
+        {"name": "ogórek", "amount": 1},
+        {"name": "papryka czerwona", "amount": 1},
+        {"name": "cebula", "amount": 1},
+        {"name": "oliwa z oliwek", "amount": 3},
+        {"name": "oregano", "amount": 1},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Tosty z jajkiem i szynką",
+      "description": "Szybkie i pożywne tosty z jajkiem sadzonym i szynką.",
+      "instructions": "1. Opiecz chleb tostowy w tosterze lub na suchej patelni.\n2. Na patelni z odrobiną masła usmaż jajko sadzone.\n3. Na toście połóż szynkę, a na nią jajko.\n4. Dopraw solą i pieprzem.\n5. Przykryj drugim tostem lub podawaj otwarte.",
+      "category": "Śniadanie",
+      "prep_time": 10,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "chleb tostowy", "amount": 2},
+        {"name": "jajko", "amount": 1},
+        {"name": "szynka", "amount": 2},
+        {"name": "masło", "amount": 10},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Pieczarki w śmietanie",
+      "description": "Aromatyczne pieczarki duszone w śmietanie z czosnkiem — jako dodatek lub osobne danie.",
+      "instructions": "1. Pieczarki pokrój w plasterki.\n2. Na patelni rozgrzej masło, podsmaż cebulę.\n3. Dodaj pieczarki i smaż 5 minut.\n4. Dodaj czosnek, smaż minutę.\n5. Wlej śmietanę, dopraw solą i pieprzem.\n6. Gotuj 5 minut na wolnym ogniu.\n7. Podawaj z pieczywem lub ryżem.",
+      "category": "Kolacja",
+      "prep_time": 20,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "pieczarki", "amount": 300},
+        {"name": "śmietana 18%", "amount": 200},
+        {"name": "cebula", "amount": 1},
+        {"name": "czosnek", "amount": 3},
+        {"name": "masło", "amount": 20},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Smoothie bananowe",
+      "description": "Kremowe smoothie z bananów i jogurtu — pełne energii na cały dzień.",
+      "instructions": "1. Banana obierz i połam na kawałki.\n2. Wrzuć do blendera banana, jogurt, mleko i miód.\n3. Dodaj cynamon.\n4. Blenduj 30 sekund na gładki koktajl.\n5. Przelej do szklanki i podawaj od razu.",
+      "category": "Przekąska",
+      "prep_time": 5,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "banan", "amount": 2},
+        {"name": "jogurt naturalny", "amount": 150},
+        {"name": "mleko", "amount": 100},
+        {"name": "miód", "amount": 1},
+        {"name": "cynamon", "amount": 1}
+      ]
+    },
+    {
+      "title": "Szpinak z jajkiem i czosnkiem",
+      "description": "Zdrowy i szybki obiad — szpinak podsmażony z czosnkiem, podany z jajkiem sadzonym.",
+      "instructions": "1. Na patelni rozgrzej oliwę.\n2. Podsmaż pokrojony czosnek przez 30 sekund.\n3. Dodaj szpinak i smaż 2-3 minuty aż opadnie.\n4. Dopraw solą, pieprzem i cytryną.\n5. Na drugiej patelni usmaż jajka sadzone.\n6. Podawaj szpinak z jajkiem na wierzchu.",
+      "category": "Obiad",
+      "prep_time": 15,
+      "difficulty": "easy",
+      "ingredients": [
+        {"name": "szpinak", "amount": 200},
+        {"name": "jajko", "amount": 2},
+        {"name": "czosnek", "amount": 3},
+        {"name": "oliwa z oliwek", "amount": 2},
+        {"name": "cytryna", "amount": 1},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    },
+    {
+      "title": "Zapiekanka makaronowa z serem",
+      "description": "Sycąca zapiekanka z makaronu, sera żółtego i śmietany — comfort food w najlepszym wydaniu.",
+      "instructions": "1. Ugotuj makaron al dente.\n2. Wymieszaj śmietanę z jajkami, solą i pieprzem.\n3. Na dno naczynia żaroodpornego wyłóż makaron.\n4. Zalej mieszanką śmietanową.\n5. Posyp obficie startym serem.\n6. Piecz w 180°C przez 25 minut aż ser się zarumieni.",
+      "category": "Obiad",
+      "prep_time": 45,
+      "difficulty": "medium",
+      "ingredients": [
+        {"name": "makaron", "amount": 300},
+        {"name": "ser żółty", "amount": 200},
+        {"name": "śmietana 18%", "amount": 200},
+        {"name": "jajko", "amount": 2},
+        {"name": "sól", "amount": 1},
+        {"name": "pieprz", "amount": 1}
+      ]
+    }
+  ]
+}
