@@ -153,3 +153,30 @@ def recipe_search(request):
         'recipes': recipes,
         'selected_count': selected_count,
 })
+
+@login_required
+def recipe_recommendations(request):
+    """Rekomendacje przepisów na podstawie preferencji dietetycznych użytkownika."""
+    from accounts.models import UserProfile
+
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    user_preferences = profile.dietary_preferences.all()
+
+    recommended = None
+    if user_preferences.exists():
+        recommended = (
+            Recipe.objects
+            .filter(is_published=True, dietary_preferences__in=user_preferences)
+            .annotate(
+                matched_prefs=Count('dietary_preferences', filter=models.Q(
+                    dietary_preferences__in=user_preferences
+                ))
+            )
+            .order_by('-matched_prefs', '-created_at')
+            .distinct()
+        )
+
+    return render(request, 'recipes/recommendations.html', {
+        'recommended': recommended,
+        'user_preferences': user_preferences,
+    })

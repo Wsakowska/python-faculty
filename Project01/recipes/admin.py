@@ -26,7 +26,8 @@ class IngredientAdmin(admin.ModelAdmin):
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'category', 'difficulty', 'is_published', 'created_at']
-    list_filter = ['category', 'difficulty', 'is_published']
+    list_filter = ['category', 'difficulty', 'is_published', 'dietary_preferences']
     search_fields = ['title', 'description']
     prepopulated_fields = {'slug': ('title',)}
+    filter_horizontal = ['dietary_preferences']
     inlines = [RecipeIngredientInline]

@@ -77,6 +77,10 @@ class Recipe(models.Model):
         Ingredient, through='RecipeIngredient',
         related_name='recipes', verbose_name='składniki'
     )
+    dietary_preferences = models.ManyToManyField(
+        'accounts.DietaryPreference', blank=True,
+        related_name='recipes', verbose_name='preferencje dietetyczne'
+    )
     prep_time = models.PositiveIntegerField('czas przygotowania (min)')
     difficulty = models.CharField(
         'poziom trudności', max_length=10,

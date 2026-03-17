@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Rekomendacje — Co mam w lodówce?{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">
+    <i class="bi bi-stars text-success"></i> Rekomendacje dla Ciebie
+</h2>
+
+{% if user_preferences %}
+<p class="text-muted mb-4">
+    Na podstawie Twoich preferencji:
+    {% for pref in user_preferences %}
+        <span class="badge bg-success">{{ pref.name }}</span>
+    {% endfor %}
+</p>
+
+    {% if recommended %}
+    <div class="row">
+        {% for recipe in recommended %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.title }}"
+                         style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                         style="height: 200px;">
+                        <i class="bi bi-camera text-muted" style="font-size: 3rem;"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text text-muted">{{ recipe.description|truncatewords:15 }}</p>
+                    <div class="mb-2">
+                        {% for pref in recipe.dietary_preferences.all %}
+                            <span class="badge bg-info">{{ pref.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-success">{{ recipe.get_difficulty_display }}</span>
+                        <small class="text-muted">
+                            <i class="bi bi-clock"></i> {{ recipe.prep_time }} min
+                        </small>
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}"
+                       class="btn btn-outline-success w-100">Zobacz przepis</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-emoji-neutral text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-3">
+            Nie znaleziono przepisów pasujących do Twoich preferencji.
+            Przepisy muszą mieć przypisane preferencje dietetyczne.
+        </p>
+    </div>
+    {% endif %}
+
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-sliders text-muted" style="font-size: 3rem;"></i>
+    <p class="text-muted mt-3">
+        Nie ustawiłeś jeszcze preferencji dietetycznych.
+    </p>
+    <a href="{% url 'accounts:profile' %}" class="btn btn-success">
+        <i class="bi bi-person-circle"></i> Ustaw preferencje w profilu
+    </a>
+</div>
+{% endif %}
+{% endblock %}
