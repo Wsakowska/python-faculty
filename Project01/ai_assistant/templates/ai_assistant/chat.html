@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Asystent AI — Co mam w lodówce?{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">
+            <i class="bi bi-robot text-success"></i> Asystent kucharski AI
+        </h2>
+        <p class="text-muted">
+            Wpisz składniki, które masz, a AI zaproponuje Ci przepis!
+            Możesz też zapytać o cokolwiek związanego z gotowaniem.
+        </p>
+
+        <!-- Formularz -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="message" class="form-label">
+                            Co masz w lodówce? O co chcesz zapytać?
+                        </label>
+                        <textarea name="message" id="message" rows="3"
+                                  class="form-control"
+                                  placeholder="np. Mam jajka, mąkę, mleko i banany. Co mogę zrobić?">{{ user_message }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-send"></i> Zapytaj AI
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Błąd -->
+        {% if error %}
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle"></i> {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Odpowiedź AI -->
+        {% if response_text %}
+        <div class="card shadow-sm border-success">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-robot"></i> Odpowiedź asystenta
+                </h5>
+            </div>
+            <div class="card-body">
+                {{ response_text|linebreaks }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

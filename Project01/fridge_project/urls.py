@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('recipes.urls')),
     path('konto/', include('accounts.urls')),
     path('komentarze/', include('comments.urls')),
+    path('asystent/', include('ai_assistant.urls')),
 ]
 
 # Serwowanie plików media w trybie deweloperskim

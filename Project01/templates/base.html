@@ -35,6 +35,11 @@
                             <i class="bi bi-search"></i> Szukaj
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ai_assistant:chat' %}">
+                            <i class="bi bi-robot"></i> Asystent AI
+                        </a>
+                    </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'recipes:recipe_create' %}">
