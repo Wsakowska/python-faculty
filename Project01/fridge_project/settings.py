@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'accounts',
     'comments',
     'ai_assistant',
+    'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -136,5 +138,20 @@ LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'recipes:home'
 LOGOUT_REDIRECT_URL = 'recipes:home'
 
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+# Swagger / OpenAPI
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Co mam w lodówce? — API',
+    'DESCRIPTION': 'REST API aplikacji "Co mam w lodówce?" — wyszukiwarka przepisów na podstawie składników.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'LANGUAGE': 'pl',
+}
 # Domyślny typ klucza głównego
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
