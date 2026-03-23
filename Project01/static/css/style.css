@@ -1,0 +1,213 @@
+/* =============================================
+   Co mam w lodówce? — Własne style
+   ============================================= */
+
+/* ---------- Ogólne ---------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* ---------- Karty przepisów ---------- */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-footer {
+    border-top: none;
+}
+
+/* ---------- Strona główna — hero ---------- */
+.hero-section {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    font-weight: 800;
+}
+
+.hero-section p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-section .btn-light {
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.6rem 1.8rem;
+}
+
+.hero-section .btn-outline-light {
+    border-radius: 50px;
+    padding: 0.6rem 1.8rem;
+}
+
+/* ---------- Feature cards (strona główna) ---------- */
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(25, 135, 84, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.feature-icon i {
+    font-size: 2rem;
+    color: #198754;
+}
+
+/* ---------- Badge ---------- */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+    border-radius: 50px;
+}
+
+/* ---------- Wyszukiwarka ---------- */
+.search-panel {
+    position: sticky;
+    top: 80px;
+}
+
+.search-panel .form-check {
+    padding: 0.35rem 0 0.35rem 1.8rem;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.15s;
+}
+
+.search-panel .form-check:hover {
+    background-color: #f0fdf4;
+}
+
+.search-panel .form-check:last-child {
+    border-bottom: none;
+}
+
+/* ---------- Dopasowanie wyników ---------- */
+.match-badge {
+    font-size: 1.2rem;
+    min-width: 60px;
+}
+
+/* ---------- Komentarze ---------- */
+.comment-card {
+    border-left: 3px solid #198754;
+    border-radius: 0 12px 12px 0;
+}
+
+.stars {
+    color: #ffc107;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* ---------- Formularz ---------- */
+.form-control:focus,
+.form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+/* ---------- Przyciski ---------- */
+.btn-success {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-outline-success {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-outline-success:hover {
+    transform: translateY(-1px);
+}
+
+/* ---------- Stopka ---------- */
+footer {
+    font-size: 0.9rem;
+}
+
+/* ---------- Profil ---------- */
+.profile-header {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ---------- AI Chat ---------- */
+.ai-response {
+    border-left: 4px solid #198754;
+    background-color: #f0fdf4;
+    border-radius: 0 12px 12px 0;
+    padding: 1.5rem;
+}
+
+.ai-response h1, .ai-response h2, .ai-response h3,
+.ai-response h4, .ai-response h5 {
+    color: #198754;
+}
+
+/* ---------- Pusta strona / placeholder ---------- */
+.empty-state i {
+    opacity: 0.3;
+}
+
+/* ---------- Animacja ładowania ---------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .alert {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ---------- Scrollbar w wyszukiwarce ---------- */
+.search-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.search-scroll::-webkit-scrollbar-thumb {
+    background: #198754;
+    border-radius: 3px;
+}

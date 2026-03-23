@@ -27,8 +27,11 @@ urlpatterns = [
     path('konto/', include('accounts.urls')),
     path('komentarze/', include('comments.urls')),
     path('asystent/', include('ai_assistant.urls')),
+    path('api/', include('api.urls')),
 ]
 
+handler404 = 'django.views.defaults.page_not_found'
+handler500 = 'django.views.defaults.server_error'
 # Serwowanie plików media w trybie deweloperskim
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

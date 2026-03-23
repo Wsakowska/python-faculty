@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ai_assistant',
     'rest_framework',
     'drf_spectacular',
+    'api',
 ]
 
 MIDDLEWARE = [
