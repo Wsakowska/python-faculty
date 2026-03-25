@@ -4,7 +4,6 @@ Aplikacja webowa w Django pozwalająca wyszukiwać przepisy kulinarne na podstaw
 
 **Autorka:** Wiktoria Sakowska (274931)  
 **Przedmiot:** Programowanie w języku Python (2025/26)  
-**Prowadząca:** mgr Laura Grzonka  
 **Uniwersytet Gdański, WMFiI**
 
 ## Uruchomienie
