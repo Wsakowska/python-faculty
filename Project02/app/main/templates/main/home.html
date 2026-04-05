@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}AstroApp — Twoja mapa gwiazd{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 mb-3">
+        <i class="bi bi-stars"></i> AstroApp
+    </h1>
+    <p class="lead text-muted mb-4">
+        Odkryj swoją mapę urodzeniową, sprawdź synastrie i poznaj,
+        co gwiazdy mówią o Tobie.
+    </p>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="#" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle"></i> Wygeneruj chart
+        </a>
+        <a href="{{ url_for('main.about') }}" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-info-circle"></i> Dowiedz się więcej
+        </a>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-sun display-4 text-warning"></i>
+                <h5 class="card-title mt-3">Mapa urodzeniowa</h5>
+                <p class="card-text text-muted">
+                    Wpisz datę, godzinę i miejsce urodzenia —
+                    otrzymasz pełną mapę z pozycjami planet.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-heart display-4 text-danger"></i>
+                <h5 class="card-title mt-3">Synastria</h5>
+                <p class="card-text text-muted">
+                    Porównaj dwie mapy urodzeniowe i sprawdź
+                    kompatybilność astrologiczną.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-robot display-4 text-info"></i>
+                <h5 class="card-title mt-3">Interpretacja AI</h5>
+                <p class="card-text text-muted">
+                    Sztuczna inteligencja przeanalizuje Twoją mapę
+                    i wygeneruje spersonalizowaną interpretację.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}O aplikacji — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-info-circle"></i> O aplikacji</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <p class="lead">
+            AstroApp to aplikacja webowa do generowania map urodzeniowych
+            (natal charts) i synastrii na podstawie danych astrologicznych.
+        </p>
+
+        <h3 class="mt-4">Co oferuje AstroApp?</h3>
+        <ul>
+            <li>
+                <strong>Mapa urodzeniowa</strong> — obliczenie pozycji planet,
+                ascendentu, Midheaven i domów astrologicznych na podstawie daty,
+                godziny i miejsca urodzenia.
+            </li>
+            <li>
+                <strong>Wizualizacja SVG</strong> — graficzna mapa z pozycjami
+                planet w znakach zodiaku.
+            </li>
+            <li>
+                <strong>Synastria</strong> — porównanie dwóch map urodzeniowych
+                i analiza aspektów między planetami.
+            </li>
+            <li>
+                <strong>Interpretacja AI</strong> — spersonalizowana analiza
+                chartu wygenerowana przez model Google Gemini.
+            </li>
+            <li>
+                <strong>Konta użytkowników</strong> — zapisywanie, przeglądanie
+                i zarządzanie swoimi chartami.
+            </li>
+        </ul>
+
+        <h3 class="mt-4">Technologie</h3>
+        <p>
+            Projekt zbudowany w ramach kursu Programowanie w języku Python
+            (Uniwersytet Gdański, 2025). Wykorzystuje Flask, SQLAlchemy,
+            kerykeion (obliczenia astrologiczne) oraz Google Gemini API.
+        </p>
+    </div>
+</div>
+{% endblock %}
