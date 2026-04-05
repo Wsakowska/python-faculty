@@ -37,23 +37,23 @@
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url_for('auth.profile') }}">
                                 <i class="bi bi-person-circle"></i> {{ current_user.username }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">
                                 <i class="bi bi-box-arrow-right"></i> Wyloguj
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">
                                 <i class="bi bi-box-arrow-in-right"></i> Zaloguj
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">
                                 <i class="bi bi-person-plus"></i> Rejestracja
                             </a>
                         </li>

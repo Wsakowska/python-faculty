@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Profil — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-person-circle"></i> Profil</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ current_user.username }}</h5>
+                <p class="text-muted mb-1">
+                    <i class="bi bi-envelope"></i> {{ current_user.email }}
+                </p>
+                <p class="text-muted mb-1">
+                    <i class="bi bi-calendar"></i> Dołączono: {{ current_user.created_at.strftime('%d.%m.%Y') }}
+                </p>
+                <p class="text-muted">
+                    <i class="bi bi-star"></i> Zapisanych chartów: {{ charts|length }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h3>Twoje charty</h3>
+        {% if charts %}
+            <div class="list-group">
+                {% for chart in charts %}
+                    <div class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">{{ chart.name }}</h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-sun"></i> {{ chart.sun_sign or '—' }}
+                                    &middot;
+                                    <i class="bi bi-moon"></i> {{ chart.moon_sign or '—' }}
+                                    &middot;
+                                    {{ chart.birth_date.strftime('%d.%m.%Y') }}
+                                </small>
+                            </div>
+                            <small class="text-muted">
+                                {{ chart.created_at.strftime('%d.%m.%Y') }}
+                            </small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">
+                Nie masz jeszcze żadnych chartów.
+                <a href="#">Wygeneruj pierwszy!</a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
