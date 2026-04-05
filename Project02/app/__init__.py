@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from config import Config
 from app.extensions import db, migrate, login_manager
 
@@ -28,5 +28,15 @@ def create_app(config_class=Config):
 
     # Import modeli, żeby user_loader się zarejestrował
     from app import models  # noqa: F401
+
+    # Obsługa błędów
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template("404.html"), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        db.session.rollback()
+        return render_template("500.html"), 500
 
     return app
