@@ -12,7 +12,7 @@
         co gwiazdy mówią o Tobie.
     </p>
     <div class="d-flex justify-content-center gap-3">
-        <a href="#" class="btn btn-primary btn-lg">
+        <a href="{{ url_for('charts.generate') }}" class="btn btn-primary btn-lg">
             <i class="bi bi-plus-circle"></i> Wygeneruj chart
         </a>
         <a href="{{ url_for('main.about') }}" class="btn btn-outline-secondary btn-lg">

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Chart: {{ chart.name }} — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">
+    <i class="bi bi-stars"></i> Chart: {{ chart.name }}
+</h1>
+
+<div class="row">
+    <!-- Podsumowanie -->
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Podsumowanie</h5>
+                <p class="text-muted mb-2">
+                    {{ birth.day }}.{{ "%02d"|format(birth.month) }}.{{ birth.year }},
+                    {{ "%02d"|format(birth.hour) }}:{{ "%02d"|format(birth.minute) }},
+                    {{ birth.city }}
+                </p>
+                <hr>
+                <p class="mb-1">
+                    <strong>☀️ Słońce:</strong>
+                    {{ chart.sun_sign }} {{ chart.planets[0].sign_emoji }}
+                </p>
+                <p class="mb-1">
+                    <strong>🌙 Księżyc:</strong>
+                    {{ chart.moon_sign }} {{ chart.planets[1].sign_emoji }}
+                </p>
+                <p class="mb-1">
+                    <strong>⬆️ Ascendent:</strong>
+                    {{ chart.ascendant }} {{ chart.asc_emoji }}
+                </p>
+                <p class="mb-0">
+                    <strong>🏔️ MC:</strong>
+                    {{ chart.mc }} {{ chart.mc_emoji }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Przycisk zapisu -->
+        {% if current_user.is_authenticated %}
+            <form method="POST" action="{{ url_for('charts.save') }}" class="mt-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-bookmark-plus"></i> Zapisz chart
+                </button>
+            </form>
+        {% else %}
+            <div class="alert alert-info mt-3">
+                <a href="{{ url_for('auth.login') }}">Zaloguj się</a>, aby zapisać chart.
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('charts.generate') }}" class="btn btn-outline-secondary w-100 mt-2">
+            <i class="bi bi-arrow-repeat"></i> Wygeneruj nowy
+        </a>
+    </div>
+
+    <!-- Tabela planet -->
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Pozycje planet</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Planeta</th>
+                                <th>Znak</th>
+                                <th>Pozycja</th>
+                                <th>Dom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for planet in chart.planets %}
+                                <tr>
+                                    <td>{{ planet.name_pl }}</td>
+                                    <td>{{ planet.sign_emoji }} {{ planet.sign }}</td>
+                                    <td>{{ planet.position }}°</td>
+                                    <td>{{ planet.house }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="table-secondary">
+                                <td>Ascendent</td>
+                                <td>{{ chart.asc_emoji }} {{ chart.ascendant }}</td>
+                                <td>{{ chart.asc_position }}°</td>
+                                <td>I</td>
+                            </tr>
+                            <tr class="table-secondary">
+                                <td>Midheaven (MC)</td>
+                                <td>{{ chart.mc_emoji }} {{ chart.mc }}</td>
+                                <td>{{ chart.mc_position }}°</td>
+                                <td>X</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
