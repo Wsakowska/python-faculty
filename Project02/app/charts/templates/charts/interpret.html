@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Interpretacja AI: {{ chart.name }} — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">
+    <i class="bi bi-robot"></i> Interpretacja AI: {{ chart.name }}
+</h1>
+
+<div class="row">
+    <!-- Podsumowanie chartu -->
+    <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title">Podsumowanie</h6>
+                <p class="mb-1">☀️ {{ chart.sun_sign }}</p>
+                <p class="mb-1">🌙 {{ chart.moon_sign }}</p>
+                <p class="mb-1">⬆️ {{ chart.ascendant }}</p>
+                <p class="mb-0">🏔️ {{ chart.mc }}</p>
+            </div>
+        </div>
+
+        <a href="{{ url_for('charts.result') }}" class="btn btn-outline-secondary w-100 mt-3">
+            <i class="bi bi-arrow-left"></i> Powrót do chartu
+        </a>
+    </div>
+
+    <!-- Interpretacja -->
+    <div class="col-md-9">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                {% if interpretation %}
+                    <div class="ai-interpretation">
+                        {{ interpretation|safe }}
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                        <i class="bi bi-robot"></i>
+                        Interpretacja wygenerowana przez Google Gemini 2.0 Flash.
+                        Traktuj ją jako rozrywkę, nie jako poradę życiową.
+                    </small>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-exclamation-triangle display-4 text-warning"></i>
+                        <p class="lead mt-3">
+                            Interpretacja AI jest niedostępna.
+                        </p>
+                        <p class="text-muted">
+                            Upewnij się, że klucz API Gemini jest ustawiony
+                            w zmiennej środowiskowej <code>GEMINI_API_KEY</code>.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

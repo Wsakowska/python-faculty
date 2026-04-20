@@ -10,6 +10,7 @@ class Config:
         "DATABASE_URL", f"sqlite:///{os.path.join(basedir, 'instance', 'astro.db')}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 
 class TestConfig(Config):

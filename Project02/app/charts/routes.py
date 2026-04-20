@@ -9,6 +9,7 @@ from app.charts.astro_service import (
 )
 from app.extensions import db
 from app.models import BirthChart
+from app.charts.ai_service import get_ai_interpretation, get_synastry_interpretation
 
 
 @bp.route("/generate", methods=["GET", "POST"])
@@ -318,3 +319,73 @@ def delete_chart(chart_id):
 
     flash(f'Chart "{name}" został usunięty.', "info")
     return redirect(url_for("charts.history"))
+
+
+# ─────────────────────────────────────────────
+# AI — interpretacja chartu przez Gemini
+# ─────────────────────────────────────────────
+
+@bp.route("/interpret")
+def interpret():
+    """Interpretacja AI wygenerowanego chartu (z sesji)."""
+    chart_data = session.get("chart_data")
+    birth_info = session.get("birth_info")
+
+    if not chart_data:
+        flash("Najpierw wygeneruj chart.", "warning")
+        return redirect(url_for("charts.generate"))
+
+    interpretation = get_ai_interpretation(chart_data)
+
+    return render_template(
+        "charts/interpret.html",
+        chart=chart_data,
+        birth=birth_info,
+        interpretation=interpretation,
+    )
+
+
+@bp.route("/view/<int:chart_id>/interpret")
+@login_required
+def interpret_saved(chart_id):
+    """Interpretacja AI zapisanego chartu."""
+    chart = BirthChart.query.get_or_404(chart_id)
+    if chart.user_id != current_user.id:
+        flash("Brak dostępu do tego chartu.", "danger")
+        return redirect(url_for("charts.history"))
+
+    chart_data = json_to_chart_data(chart.chart_data)
+    interpretation = get_ai_interpretation(chart_data)
+
+    return render_template(
+        "charts/interpret.html",
+        chart=chart_data,
+        birth={
+            "name": chart.name,
+            "day": chart.birth_date.day,
+            "month": chart.birth_date.month,
+            "year": chart.birth_date.year,
+            "hour": chart.birth_time.hour,
+            "minute": chart.birth_time.minute,
+            "city": chart.birth_city,
+        },
+        interpretation=interpretation,
+    )
+
+
+@bp.route("/synastry/interpret")
+def interpret_synastry():
+    """Interpretacja AI synastrii."""
+    data = session.get("synastry_data")
+    if not data:
+        flash("Najpierw wygeneruj synastrię.", "warning")
+        return redirect(url_for("charts.synastry"))
+
+    interpretation = get_synastry_interpretation(data["chart1"], data["chart2"])
+
+    return render_template(
+        "charts/interpret_synastry.html",
+        chart1=data["chart1"],
+        chart2=data["chart2"],
+        interpretation=interpretation,
+    )

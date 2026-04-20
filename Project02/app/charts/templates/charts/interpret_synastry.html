@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Interpretacja synastrii — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">
+    <i class="bi bi-robot"></i> Interpretacja: {{ chart1.name }} & {{ chart2.name }}
+</h1>
+
+<div class="row">
+    <!-- Podsumowanie -->
+    <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+                <h6>{{ chart1.name }}</h6>
+                <small>☀️ {{ chart1.sun_sign }} · 🌙 {{ chart1.moon_sign }}</small>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h6>{{ chart2.name }}</h6>
+                <small>☀️ {{ chart2.sun_sign }} · 🌙 {{ chart2.moon_sign }}</small>
+            </div>
+        </div>
+
+        <a href="{{ url_for('charts.synastry_result') }}" class="btn btn-outline-secondary w-100 mt-3">
+            <i class="bi bi-arrow-left"></i> Powrót
+        </a>
+    </div>
+
+    <!-- Interpretacja -->
+    <div class="col-md-9">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                {% if interpretation %}
+                    <div class="ai-interpretation">
+                        {{ interpretation|safe }}
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                        <i class="bi bi-robot"></i>
+                        Interpretacja wygenerowana przez Google Gemini 2.0 Flash.
+                    </small>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-exclamation-triangle display-4 text-warning"></i>
+                        <p class="lead mt-3">Interpretacja AI jest niedostępna.</p>
+                        <p class="text-muted">
+                            Ustaw <code>GEMINI_API_KEY</code> w zmiennych środowiskowych.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
