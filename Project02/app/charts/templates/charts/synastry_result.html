@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Synastria: {{ chart1.name }} & {{ chart2.name }} — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">
+    <i class="bi bi-heart"></i> Synastria: {{ chart1.name }} & {{ chart2.name }}
+</h1>
+
+<!-- Podsumowanie obu osób -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ chart1.name }}</h5>
+                <p class="text-muted mb-2">
+                    {{ birth1.day }}.{{ "%02d"|format(birth1.month) }}.{{ birth1.year }},
+                    {{ birth1.city }}
+                </p>
+                <p class="mb-1">☀️ <strong>Słońce:</strong> {{ chart1.sun_sign }}</p>
+                <p class="mb-1">🌙 <strong>Księżyc:</strong> {{ chart1.moon_sign }}</p>
+                <p class="mb-0">⬆️ <strong>Ascendent:</strong> {{ chart1.ascendant }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ chart2.name }}</h5>
+                <p class="text-muted mb-2">
+                    {{ birth2.day }}.{{ "%02d"|format(birth2.month) }}.{{ birth2.year }},
+                    {{ birth2.city }}
+                </p>
+                <p class="mb-1">☀️ <strong>Słońce:</strong> {{ chart2.sun_sign }}</p>
+                <p class="mb-1">🌙 <strong>Księżyc:</strong> {{ chart2.moon_sign }}</p>
+                <p class="mb-0">⬆️ <strong>Ascendent:</strong> {{ chart2.ascendant }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabela porównawcza -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Porównanie pozycji planet</h5>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Planeta</th>
+                        <th>{{ chart1.name }}</th>
+                        <th>{{ chart2.name }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(chart1.planets|length) %}
+                        <tr>
+                            <td>{{ chart1.planets[i].name_pl }}</td>
+                            <td>{{ chart1.planets[i].sign_emoji }} {{ chart1.planets[i].sign }} {{ chart1.planets[i].position }}°</td>
+                            <td>{{ chart2.planets[i].sign_emoji }} {{ chart2.planets[i].sign }} {{ chart2.planets[i].position }}°</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-secondary">
+                        <td>Ascendent</td>
+                        <td>{{ chart1.asc_emoji }} {{ chart1.ascendant }} {{ chart1.asc_position }}°</td>
+                        <td>{{ chart2.asc_emoji }} {{ chart2.ascendant }} {{ chart2.asc_position }}°</td>
+                    </tr>
+                    <tr class="table-secondary">
+                        <td>Midheaven (MC)</td>
+                        <td>{{ chart1.mc_emoji }} {{ chart1.mc }} {{ chart1.mc_position }}°</td>
+                        <td>{{ chart2.mc_emoji }} {{ chart2.mc }} {{ chart2.mc_position }}°</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Wizualizacja SVG synastrii -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-diagram-3"></i> Mapa synastrii</h5>
+        <div class="chart-svg-container text-center">
+            <object data="{{ url_for('charts.synastry_svg') }}"
+                    type="image/svg+xml"
+                    width="100%"
+                    style="max-width: 800px;">
+                <p class="text-muted">Nie udało się załadować mapy SVG.</p>
+            </object>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex gap-2">
+    <a href="{{ url_for('charts.synastry') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-repeat"></i> Nowe porównanie
+    </a>
+    <a href="{{ url_for('charts.generate') }}" class="btn btn-outline-primary">
+        <i class="bi bi-plus-circle"></i> Wygeneruj chart
+    </a>
+</div>
+{% endblock %}

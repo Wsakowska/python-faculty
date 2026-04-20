@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Synastria — AstroApp{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h1 class="mb-4"><i class="bi bi-heart"></i> Synastria</h1>
+        <p class="text-muted mb-4">
+            Porównaj dwie mapy urodzeniowe i sprawdź kompatybilność astrologiczną.
+        </p>
+
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <!-- Osoba 1 -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-person"></i> Osoba 1</h5>
+
+                            <div class="mb-3">
+                                {{ form.name1.label(class="form-label") }}
+                                {{ form.name1(class="form-control" + (" is-invalid" if form.name1.errors else ""),
+                                   placeholder="np. Wiktoria") }}
+                                {% for error in form.name1.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    {{ form.day1.label(class="form-label") }}
+                                    {{ form.day1(class="form-control" + (" is-invalid" if form.day1.errors else ""),
+                                       placeholder="28") }}
+                                </div>
+                                <div class="col-4 mb-3">
+                                    {{ form.month1.label(class="form-label") }}
+                                    {{ form.month1(class="form-select") }}
+                                </div>
+                                <div class="col-4 mb-3">
+                                    {{ form.year1.label(class="form-label") }}
+                                    {{ form.year1(class="form-control" + (" is-invalid" if form.year1.errors else ""),
+                                       placeholder="2001") }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    {{ form.hour1.label(class="form-label") }}
+                                    {{ form.hour1(class="form-control", placeholder="20") }}
+                                </div>
+                                <div class="col-6 mb-3">
+                                    {{ form.minute1.label(class="form-label") }}
+                                    {{ form.minute1(class="form-control", placeholder="0") }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.city1.label(class="form-label") }}
+                                {{ form.city1(class="form-control", placeholder="np. Starogard Gdański") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Osoba 2 -->
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-person"></i> Osoba 2</h5>
+
+                            <div class="mb-3">
+                                {{ form.name2.label(class="form-label") }}
+                                {{ form.name2(class="form-control" + (" is-invalid" if form.name2.errors else ""),
+                                   placeholder="np. Oliwier") }}
+                                {% for error in form.name2.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    {{ form.day2.label(class="form-label") }}
+                                    {{ form.day2(class="form-control", placeholder="15") }}
+                                </div>
+                                <div class="col-4 mb-3">
+                                    {{ form.month2.label(class="form-label") }}
+                                    {{ form.month2(class="form-select") }}
+                                </div>
+                                <div class="col-4 mb-3">
+                                    {{ form.year2.label(class="form-label") }}
+                                    {{ form.year2(class="form-control", placeholder="2000") }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    {{ form.hour2.label(class="form-label") }}
+                                    {{ form.hour2(class="form-control", placeholder="12") }}
+                                </div>
+                                <div class="col-6 mb-3">
+                                    {{ form.minute2.label(class="form-label") }}
+                                    {{ form.minute2(class="form-control", placeholder="0") }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form.city2.label(class="form-label") }}
+                                {{ form.city2(class="form-control", placeholder="np. Gdańsk") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{ form.submit(class="btn btn-primary btn-lg w-100") }}
+        </form>
+    </div>
+</div>
+{% endblock %}
