@@ -50,7 +50,7 @@
         {% else %}
             <p class="text-muted">
                 Nie masz jeszcze żadnych chartów.
-                <a href="#">Wygeneruj pierwszy!</a>
+                <a href="{{ url_for('charts.generate') }}">Wygeneruj pierwszy!</a>
             </p>
         {% endif %}
     </div>

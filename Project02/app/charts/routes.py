@@ -5,7 +5,7 @@ from app.charts import bp
 from app.charts.forms import BirthDataForm, SynastryForm
 from app.charts.astro_service import (
     generate_chart, generate_chart_svg, generate_synastry_svg,
-    chart_data_to_json,
+    chart_data_to_json, json_to_chart_data,
 )
 from app.extensions import db
 from app.models import BirthChart
@@ -197,3 +197,124 @@ def synastry_svg():
         return Response("Błąd generowania SVG", status=500)
 
     return Response(svg, mimetype="image/svg+xml")
+
+# ─────────────────────────────────────────────
+# CRUD — historia, podgląd, edycja, usuwanie
+# ─────────────────────────────────────────────
+
+@bp.route("/history")
+@login_required
+def history():
+    """Lista zapisanych chartów użytkownika."""
+    charts = (
+        BirthChart.query
+        .filter_by(user_id=current_user.id)
+        .order_by(BirthChart.created_at.desc())
+        .all()
+    )
+    return render_template("charts/history.html", charts=charts)
+
+
+@bp.route("/view/<int:chart_id>")
+@login_required
+def view_chart(chart_id):
+    """Podgląd zapisanego chartu."""
+    chart = BirthChart.query.get_or_404(chart_id)
+    if chart.user_id != current_user.id:
+        flash("Brak dostępu do tego chartu.", "danger")
+        return redirect(url_for("charts.history"))
+
+    chart_data = json_to_chart_data(chart.chart_data)
+    return render_template("charts/view.html", chart=chart, chart_data=chart_data)
+
+
+@bp.route("/view/<int:chart_id>/svg")
+@login_required
+def saved_chart_svg(chart_id):
+    """Generuje SVG dla zapisanego chartu."""
+    chart = BirthChart.query.get_or_404(chart_id)
+    if chart.user_id != current_user.id:
+        return Response("Brak dostępu", status=403)
+
+    svg = generate_chart_svg(
+        name=chart.name,
+        year=chart.birth_date.year,
+        month=chart.birth_date.month,
+        day=chart.birth_date.day,
+        hour=chart.birth_time.hour,
+        minute=chart.birth_time.minute,
+        city=chart.birth_city,
+    )
+
+    if svg is None:
+        return Response("Błąd generowania SVG", status=500)
+
+    return Response(svg, mimetype="image/svg+xml")
+
+
+@bp.route("/edit/<int:chart_id>", methods=["GET", "POST"])
+@login_required
+def edit_chart(chart_id):
+    """Edycja zapisanego chartu (przelicza na nowo)."""
+    chart = BirthChart.query.get_or_404(chart_id)
+    if chart.user_id != current_user.id:
+        flash("Brak dostępu do tego chartu.", "danger")
+        return redirect(url_for("charts.history"))
+
+    form = BirthDataForm()
+
+    if form.validate_on_submit():
+        chart_data = generate_chart(
+            name=form.name.data,
+            year=form.year.data,
+            month=form.month.data,
+            day=form.day.data,
+            hour=form.hour.data,
+            minute=form.minute.data,
+            city=form.city.data,
+        )
+
+        if chart_data is None:
+            flash("Nie udało się przeliczyć chartu. Sprawdź dane.", "danger")
+            return render_template("charts/edit.html", form=form, chart=chart)
+
+        chart.name = form.name.data
+        chart.birth_date = date(form.year.data, form.month.data, form.day.data)
+        chart.birth_time = time(form.hour.data, form.minute.data)
+        chart.birth_city = form.city.data
+        chart.sun_sign = chart_data["sun_sign"]
+        chart.moon_sign = chart_data["moon_sign"]
+        chart.ascendant = chart_data["ascendant"]
+        chart.chart_data = chart_data_to_json(chart_data)
+        db.session.commit()
+
+        flash(f"Chart dla {chart.name} został zaktualizowany!", "success")
+        return redirect(url_for("charts.view_chart", chart_id=chart.id))
+
+    elif not form.is_submitted():
+        form.name.data = chart.name
+        form.day.data = chart.birth_date.day
+        form.month.data = chart.birth_date.month
+        form.year.data = chart.birth_date.year
+        form.hour.data = chart.birth_time.hour
+        form.minute.data = chart.birth_time.minute
+        form.city.data = chart.birth_city
+
+    return render_template("charts/edit.html", form=form, chart=chart)
+
+
+@bp.route("/delete/<int:chart_id>", methods=["POST"])
+@login_required
+def delete_chart(chart_id):
+    """Usuwanie zapisanego chartu."""
+    chart = BirthChart.query.get_or_404(chart_id)
+    if chart.user_id != current_user.id:
+        flash("Brak dostępu do tego chartu.", "danger")
+        return redirect(url_for("charts.history"))
+
+    name = chart.name
+    db.session.delete(chart)
+    db.session.commit()
+
+    flash(f'Chart "{name}" został usunięty.', "info")
+    return redirect(url_for("charts.history"))

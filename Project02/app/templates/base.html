@@ -39,6 +39,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.search') }}">
+                            <i class="bi bi-search"></i> Szukaj
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.about') }}">
                             <i class="bi bi-info-circle"></i> O aplikacji
                         </a>
@@ -46,6 +51,11 @@
                 </ul>
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('charts.history') }}">
+                                <i class="bi bi-clock-history"></i> Moje charty
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('auth.profile') }}">
                                 <i class="bi bi-person-circle"></i> {{ current_user.username }}
