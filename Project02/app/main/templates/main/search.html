@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Szukaj — AstroApp{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-search"></i> Szukaj chartów</h1>
+
+<!-- Formularz wyszukiwania -->
+<form method="GET" action="{{ url_for('main.search') }}" class="mb-4">
+    <div class="input-group input-group-lg">
+        <input type="text" name="q" class="form-control"
+               placeholder="Wpisz imię, znak zodiaku lub miasto..."
+               value="{{ query }}">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-search"></i> Szukaj
+        </button>
+    </div>
+</form>
+
+<!-- Szybkie filtry po znakach -->
+<div class="mb-4">
+    <small class="text-muted d-block mb-2">Szybkie filtry:</small>
+    <div class="d-flex flex-wrap gap-1">
+        {% for sign in signs %}
+            <a href="{{ url_for('main.search', q=sign) }}"
+               class="btn btn-sm {% if query == sign %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                {{ sign }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Wyniki -->
+{% if query %}
+    <h5 class="mb-3">
+        {% if results %}
+            Znaleziono {{ results|length }} {{ "chart" if results|length == 1 else "chartów" }}
+            dla „{{ query }}"
+        {% else %}
+            Brak wyników dla „{{ query }}"
+        {% endif %}
+    </h5>
+
+    {% if results %}
+        <div class="row g-3">
+            {% for chart in results %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ chart.name }}</h6>
+                            <p class="text-muted mb-1">
+                                {{ chart.birth_date.strftime('%d.%m.%Y') }},
+                                {{ chart.birth_city }}
+                            </p>
+                            <p class="mb-0">
+                                ☀️ {{ chart.sun_sign or '—' }}
+                                &middot; 🌙 {{ chart.moon_sign or '—' }}
+                                &middot; ⬆️ {{ chart.ascendant or '—' }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <small class="text-muted">
+                                Autor: {{ chart.owner.username }}
+                                &middot; {{ chart.created_at.strftime('%d.%m.%Y') }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+    <p class="text-muted">Wpisz frazę lub kliknij na znak zodiaku, aby wyszukać charty.</p>
+{% endif %}
+{% endblock %}
