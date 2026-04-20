@@ -1,7 +1,7 @@
 """Serwis astrologiczny — wrapper na bibliotekę kerykeion."""
 
 import json
-from kerykeion import AstrologicalSubject
+from kerykeion import AstrologicalSubject, KerykeionChartSVG
 
 # Mapowanie skrótów kerykeion na polskie nazwy znaków
 SIGN_NAMES_PL = {
@@ -149,3 +149,62 @@ def json_to_chart_data(json_str):
     if not json_str:
         return None
     return json.loads(json_str)
+
+
+def generate_chart_svg(name, year, month, day, hour, minute, city, country="PL"):
+    """Generuje SVG mapy urodzeniowej.
+
+    Args:
+        Takie same jak generate_chart().
+
+    Returns:
+        String z kodem SVG lub None przy błędzie.
+    """
+    coords = get_city_coords(city)
+    if not coords:
+        return None
+
+    lat, lng = coords
+
+    try:
+        subject = AstrologicalSubject(
+            name, year, month, day, hour, minute,
+            city, country,
+            lng=lng, lat=lat,
+            tz_str="Europe/Warsaw",
+        )
+        chart_svg = KerykeionChartSVG(subject, chart_language="PL")
+        svg_string = chart_svg.makeTemplate()
+        return svg_string
+    except Exception:
+        return None
+
+
+def generate_synastry_svg(name1, y1, m1, d1, h1, min1, city1,
+                          name2, y2, m2, d2, h2, min2, city2):
+    """Generuje SVG synastrii (porównanie dwóch map).
+
+    Returns:
+        String z kodem SVG lub None przy błędzie.
+    """
+    coords1 = get_city_coords(city1)
+    coords2 = get_city_coords(city2)
+    if not coords1 or not coords2:
+        return None
+
+    try:
+        s1 = AstrologicalSubject(
+            name1, y1, m1, d1, h1, min1, city1, "PL",
+            lng=coords1[1], lat=coords1[0], tz_str="Europe/Warsaw",
+        )
+        s2 = AstrologicalSubject(
+            name2, y2, m2, d2, h2, min2, city2, "PL",
+            lng=coords2[1], lat=coords2[0], tz_str="Europe/Warsaw",
+        )
+        chart_svg = KerykeionChartSVG(
+            s1, chart_type="Synastry", second_obj=s2, chart_language="PL"
+        )
+        svg_string = chart_svg.makeTemplate()
+        return svg_string
+    except Exception:
+        return None

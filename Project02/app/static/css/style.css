@@ -17,3 +17,12 @@ main {
 .card:hover {
     transform: translateY(-4px);
 }
+
+/* SVG chart container */
+.chart-svg-container svg {
+    max-width: 100%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+}

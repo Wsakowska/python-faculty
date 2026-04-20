@@ -1,9 +1,11 @@
 from datetime import date, time
-from flask import render_template, redirect, url_for, flash, session
+from flask import render_template, redirect, url_for, flash, session, Response
 from flask_login import current_user, login_required
 from app.charts import bp
 from app.charts.forms import BirthDataForm
-from app.charts.astro_service import generate_chart, chart_data_to_json
+from app.charts.astro_service import (
+    generate_chart, generate_chart_svg, chart_data_to_json,
+)
 from app.extensions import db
 from app.models import BirthChart
 
@@ -31,7 +33,7 @@ def generate():
             )
             return render_template("charts/generate.html", form=form)
 
-        # Zapisz dane w sesji, żeby wyświetlić wynik
+        # Zapisz dane w sesji (tylko lekkie dane, bez SVG)
         session["chart_data"] = chart_data
         session["birth_info"] = {
             "name": form.name.data,
@@ -63,6 +65,29 @@ def result():
         chart=chart_data,
         birth=birth_info,
     )
+
+
+@bp.route("/svg")
+def chart_svg():
+    """Generuje SVG mapy urodzeniowej na żądanie (ładowane przez <img> lub <object>)."""
+    birth_info = session.get("birth_info")
+    if not birth_info:
+        return Response("Brak danych", status=404)
+
+    svg = generate_chart_svg(
+        name=birth_info["name"],
+        year=birth_info["year"],
+        month=birth_info["month"],
+        day=birth_info["day"],
+        hour=birth_info["hour"],
+        minute=birth_info["minute"],
+        city=birth_info["city"],
+    )
+
+    if svg is None:
+        return Response("Błąd generowania SVG", status=500)
+
+    return Response(svg, mimetype="image/svg+xml")
 
 
 @bp.route("/save", methods=["POST"])

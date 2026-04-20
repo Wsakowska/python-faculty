@@ -100,4 +100,23 @@
         </div>
     </div>
 </div>
+
+<!-- Wizualizacja SVG -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-diagram-3"></i> Mapa urodzeniowa</h5>
+                <div class="chart-svg-container text-center">
+                    <object data="{{ url_for('charts.chart_svg') }}"
+                            type="image/svg+xml"
+                            width="100%"
+                            style="max-width: 800px;">
+                        <p class="text-muted">Nie udało się załadować mapy SVG.</p>
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
