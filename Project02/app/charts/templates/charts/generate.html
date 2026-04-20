@@ -13,7 +13,7 @@
             <div class="mb-3">
                 {{ form.name.label(class="form-label") }}
                 {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else ""),
-                   placeholder="np. Wiktoria") }}
+                   placeholder="np. Lech") }}
                 {% for error in form.name.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
@@ -23,7 +23,7 @@
                 <div class="col-md-3 mb-3">
                     {{ form.day.label(class="form-label") }}
                     {{ form.day(class="form-control" + (" is-invalid" if form.day.errors else ""),
-                       placeholder="28") }}
+                       placeholder="29") }}
                     {% for error in form.day.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -38,7 +38,7 @@
                 <div class="col-md-4 mb-3">
                     {{ form.year.label(class="form-label") }}
                     {{ form.year(class="form-control" + (" is-invalid" if form.year.errors else ""),
-                       placeholder="2003") }}
+                       placeholder="1943") }}
                     {% for error in form.year.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -67,7 +67,7 @@
             <div class="mb-3">
                 {{ form.city.label(class="form-label") }}
                 {{ form.city(class="form-control" + (" is-invalid" if form.city.errors else ""),
-                   placeholder="np. Gdańsk") }}
+                   placeholder="np. Popowo") }}
                 {% for error in form.city.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}

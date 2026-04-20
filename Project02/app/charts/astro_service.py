@@ -35,6 +35,8 @@ HOUSE_NAMES_PL = {
 
 # Popularne polskie miasta z współrzędnymi
 CITIES_PL = {
+    "nowe miasto lubawskie": (53.42, 19.59),
+    "nisko": (50.52, 22.14),
     "warszawa": (52.23, 21.01),
     "kraków": (50.06, 19.94),
     "gdańsk": (54.35, 18.65),

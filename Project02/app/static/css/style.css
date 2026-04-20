@@ -1,5 +1,8 @@
-/* AstroApp — custom styles */
+/* ============================================
+   AstroApp — custom styles
+   ============================================ */
 
+/* --- Layout --- */
 body {
     min-height: 100vh;
     display: flex;
@@ -10,19 +13,126 @@ main {
     flex: 1;
 }
 
+/* --- Navbar --- */
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand i {
+    color: #c8a2e8;
+}
+
+/* --- Cards --- */
 .card {
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* SVG chart container */
+/* --- Hero section (strona główna) --- */
+.display-4 i {
+    color: #c8a2e8;
+}
+
+/* --- Formularze --- */
+.form-control:focus,
+.form-select:focus {
+    border-color: #c8a2e8;
+    box-shadow: 0 0 0 0.2rem rgba(200, 162, 232, 0.25);
+}
+
+.btn-primary {
+    background-color: #7c5cbf;
+    border-color: #7c5cbf;
+}
+
+.btn-primary:hover {
+    background-color: #6a4da8;
+    border-color: #6a4da8;
+}
+
+.btn-outline-info {
+    color: #c8a2e8;
+    border-color: #c8a2e8;
+}
+
+.btn-outline-info:hover {
+    background-color: #c8a2e8;
+    border-color: #c8a2e8;
+    color: #1a1a2e;
+}
+
+/* --- SVG chart container --- */
+.chart-svg-container {
+    overflow-x: auto;
+}
+
 .chart-svg-container svg {
     max-width: 100%;
     height: auto;
     background-color: #fff;
     border-radius: 8px;
     padding: 10px;
+}
+
+.chart-svg-container object {
+    border-radius: 8px;
+}
+
+/* --- Tabele planet --- */
+.table {
+    font-size: 0.95rem;
+}
+
+.table td:first-child {
+    font-weight: 500;
+}
+
+/* --- AI interpretacja --- */
+.ai-interpretation h5 {
+    color: #c8a2e8;
+    margin-top: 1.2rem;
+}
+
+.ai-interpretation p {
+    line-height: 1.7;
+}
+
+/* --- Wyszukiwarka — szybkie filtry --- */
+.btn-sm {
+    font-size: 0.8rem;
+}
+
+/* --- Footer --- */
+footer {
+    font-size: 0.85rem;
+}
+
+footer i {
+    color: #c8a2e8;
+}
+
+/* --- Strona błędu (404/500) --- */
+.display-1 {
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+/* --- Responsywność --- */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .chart-svg-container object {
+        min-height: 300px;
+    }
+
+    .d-flex.gap-2 {
+        flex-direction: column;
+    }
 }
