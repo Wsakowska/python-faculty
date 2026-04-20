@@ -26,6 +26,7 @@ def create_app(config_class=Config):
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix="/api")
+    csrf.exempt(api_bp)  # API nie wymaga tokenu CSRF
 
     # Import modeli, żeby user_loader się zarejestrował
     from app import models  # noqa: F401
