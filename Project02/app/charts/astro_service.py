@@ -66,15 +66,32 @@ CITIES_PL = {
 
 
 def get_city_coords(city_name):
-    """Zwraca współrzędne (lat, lng) dla polskiego miasta.
+    """Zwraca współrzędne (lat, lng) dla miasta.
+
+    Najpierw sprawdza lokalny słownik, potem szuka przez geopy (Nominatim).
 
     Args:
-        city_name: Nazwa miasta (bez znaczenia wielkość liter).
+        city_name: Nazwa miasta.
 
     Returns:
         Tuple (lat, lng) lub None jeśli miasto nie znalezione.
     """
-    return CITIES_PL.get(city_name.lower().strip())
+    # Najpierw sprawdź lokalny słownik
+    coords = CITIES_PL.get(city_name.lower().strip())
+    if coords:
+        return coords
+
+    # Jeśli nie ma w słowniku — szukaj online
+    try:
+        from geopy.geocoders import Nominatim
+        geo = Nominatim(user_agent="astroapp")
+        location = geo.geocode(f"{city_name}, Poland")
+        if location:
+            return (location.latitude, location.longitude)
+    except Exception:
+        pass
+
+    return None
 
 
 def generate_chart(name, year, month, day, hour, minute, city, country="PL"):
