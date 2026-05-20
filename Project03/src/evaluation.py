@@ -15,6 +15,7 @@ import seaborn as sns
 from sklearn.metrics import (
     accuracy_score, f1_score, precision_score, recall_score,
     confusion_matrix, classification_report, roc_auc_score, roc_curve,
+    log_loss,
 )
 from sklearn.model_selection import learning_curve
 
@@ -59,8 +60,10 @@ def evaluate_model(model, X_test, y_test, model_name, y_prob=None):
 
     if y_prob is not None:
         metrics["roc_auc"] = roc_auc_score(y_test, y_prob)
+        metrics["test_loss"] = log_loss(y_test, y_prob)
     else:
         metrics["roc_auc"] = None
+        metrics["test_loss"] = None
 
     print(f"\n{'='*50}")
     print(f"Model: {model_name}")
@@ -71,6 +74,8 @@ def evaluate_model(model, X_test, y_test, model_name, y_prob=None):
     print(f"  Recall:    {metrics['recall']:.4f}")
     if metrics["roc_auc"]:
         print(f"  ROC AUC:   {metrics['roc_auc']:.4f}")
+    if metrics["test_loss"]:
+        print(f"  Test Loss: {metrics['test_loss']:.4f}")
 
     return metrics, y_pred
 
