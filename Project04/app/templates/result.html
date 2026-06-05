@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-lg-10">
 
         <h2 class="mb-4"><i class="bi bi-clipboard-data"></i> Wynik analizy</h2>
 
+        <!-- GLOWNY WYNIK -->
         <div class="card shadow-sm mb-4">
             <div class="card-body text-center">
-
                 {% if label == 1 %}
                     <span class="badge bg-danger fs-4 px-4 py-2 mb-3">
                         <i class="bi bi-exclamation-triangle"></i> Halucynacja
@@ -21,7 +21,7 @@
                 {% endif %}
 
                 <div class="mt-3">
-                    <p class="text-muted mb-1">Pewnosc modelu</p>
+                    <p class="text-muted mb-1">Pewnosc modelu (MLP)</p>
                     <div class="progress" style="height: 30px;">
                         <div
                             class="progress-bar {% if label == 1 %}bg-danger{% else %}bg-success{% endif %}"
@@ -34,6 +34,151 @@
             </div>
         </div>
 
+        <!-- PANEL 1: KONSYLIUM 6 MODELI -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <strong><i class="bi bi-people"></i> Konsylium modeli</strong>
+                <span class="text-muted ms-2">
+                    — {{ model_summary.votes_hallucination }}/{{ model_results|length }} modeli wskazuje halucynacje
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Model</th>
+                                <th>Werdykt</th>
+                                <th>Pewnosc</th>
+                                <th>P(halucynacja)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in model_results %}
+                                <tr>
+                                    <td class="fw-bold">{{ m.name }}</td>
+                                    <td>
+                                        {% if m.label == 1 %}
+                                            <span class="badge bg-danger">Halucynacja</span>
+                                        {% else %}
+                                            <span class="badge bg-success">Poprawna</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ m.confidence }}%</td>
+                                    <td>
+                                        <div class="progress" style="height: 18px; min-width: 100px;">
+                                            <div
+                                                class="progress-bar {% if m.prob_hallucination > 50 %}bg-danger{% else %}bg-success{% endif %}"
+                                                style="width: {{ m.prob_hallucination }}%;"
+                                            >
+                                                {{ m.prob_hallucination }}%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <strong>Glosowanie wiekszosciowe:</strong>
+                    {% if model_summary.consensus == "Halucynacja" %}
+                        <span class="badge bg-danger fs-6">Halucynacja</span>
+                    {% else %}
+                        <span class="badge bg-success fs-6">Poprawna</span>
+                    {% endif %}
+                    <span class="text-muted">
+                        ({{ model_summary.votes_hallucination }} za halucynacja,
+                        {{ model_summary.votes_correct }} za poprawna)
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- PANEL 2: TOP SLOWA TF-IDF -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header">
+                        <strong><i class="bi bi-fonts"></i> Top slowa TF-IDF</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">
+                            Slowa z najwyzszymi wagami TF-IDF — na te cechy model zwrocil
+                            najwieksza uwage.
+                        </p>
+                        {% if top_words %}
+                            {% for w in top_words %}
+                                <div class="d-flex align-items-center mb-1">
+                                    <code class="me-2" style="min-width: 140px;">{{ w.word }}</code>
+                                    <div class="progress flex-grow-1" style="height: 16px;">
+                                        <div
+                                            class="progress-bar bg-primary"
+                                            style="width: {{ (w.weight / top_words[0].weight * 100)|round }}%;"
+                                        >
+                                        </div>
+                                    </div>
+                                    <small class="ms-2 text-muted">{{ w.weight }}</small>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">Brak slow w slowniku TF-IDF.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 3: ANALIZA CECH -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header">
+                        <strong><i class="bi bi-bar-chart"></i> Analiza cech tekstu</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">
+                            Porownanie cech numerycznych tekstu ze srednimi
+                            wartosciami z datasetu HaluEval.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Cecha</th>
+                                        <th class="text-end">Wartosc</th>
+                                        <th class="text-center">Blizej</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for f in feature_analysis %}
+                                        <tr>
+                                            <td class="small">{{ f.label }}</td>
+                                            <td class="text-end">
+                                                <code>{{ f.value }}</code>
+                                            </td>
+                                            <td class="text-center">
+                                                {% if f.closer_to == "hallucinated" %}
+                                                    <span class="badge bg-danger bg-opacity-75">H</span>
+                                                {% elif f.closer_to == "correct" %}
+                                                    <span class="badge bg-success bg-opacity-75">OK</span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary bg-opacity-50">—</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-2 small text-muted">
+                            <span class="badge bg-danger bg-opacity-75">H</span> = blizej srednich halucynacji,
+                            <span class="badge bg-success bg-opacity-75">OK</span> = blizej srednich poprawnych
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPRAWDZANY TEKST -->
         <div class="card shadow-sm mb-4">
             <div class="card-header">
                 <strong>Sprawdzany tekst</strong>

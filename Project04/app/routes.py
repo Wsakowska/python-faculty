@@ -3,7 +3,7 @@ from flask import (
     Blueprint, render_template, request, flash,
     redirect, url_for, session,
 )
-from app.model_loader import predict
+from app.model_loader import predict, predict_all_models, analyze_features, get_top_tfidf_words
 
 main = Blueprint("main", __name__)
 
@@ -29,7 +29,17 @@ def predict_route():
         )
         return redirect(url_for("main.index"))
 
+    # Glowna predykcja (MLP)
     result = predict(text)
+
+    # Panel 6 modeli
+    model_results, model_summary = predict_all_models(text)
+
+    # Analiza cech
+    feature_analysis = analyze_features(text)
+
+    # Top slowa TF-IDF
+    top_words = get_top_tfidf_words(text, top_n=15)
 
     # Zapis do historii w sesji
     entry = {
@@ -49,6 +59,10 @@ def predict_route():
         label=result["label"],
         confidence=result["confidence"],
         label_name=result["label_name"],
+        model_results=model_results,
+        model_summary=model_summary,
+        feature_analysis=feature_analysis,
+        top_words=top_words,
     )
 
 
