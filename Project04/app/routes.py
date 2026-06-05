@@ -1,9 +1,14 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from datetime import datetime
+from flask import (
+    Blueprint, render_template, request, flash,
+    redirect, url_for, session,
+)
 from app.model_loader import predict
 
 main = Blueprint("main", __name__)
 
 MIN_TEXT_LENGTH = 10
+MAX_HISTORY = 20
 
 
 @main.route("/")
@@ -26,6 +31,18 @@ def predict_route():
 
     result = predict(text)
 
+    # Zapis do historii w sesji
+    entry = {
+        "text": text[:200] + ("..." if len(text) > 200 else ""),
+        "label": result["label"],
+        "label_name": result["label_name"],
+        "confidence": round(result["confidence"] * 100, 1),
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+    history = session.get("history", [])
+    history.insert(0, entry)
+    session["history"] = history[:MAX_HISTORY]
+
     return render_template(
         "result.html",
         text=text,
@@ -33,6 +50,21 @@ def predict_route():
         confidence=result["confidence"],
         label_name=result["label_name"],
     )
+
+
+@main.route("/history")
+def history():
+    """Historia zapytan z biezacej sesji."""
+    entries = session.get("history", [])
+    return render_template("history.html", entries=entries)
+
+
+@main.route("/history/clear", methods=["POST"])
+def clear_history():
+    """Czyszczenie historii."""
+    session.pop("history", None)
+    flash("Historia zostala wyczyszczona.", "info")
+    return redirect(url_for("main.history"))
 
 
 @main.route("/about")

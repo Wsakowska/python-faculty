@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}HaluCheck — historia{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-clock-history"></i> Historia zapytan</h2>
+            {% if entries %}
+                <form method="POST" action="{{ url_for('main.clear_history') }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash"></i> Wyczysc historie
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+        {% if entries %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Data</th>
+                            <th>Tekst</th>
+                            <th>Wynik</th>
+                            <th>Pewnosc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in entries %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="text-nowrap">{{ entry.timestamp }}</td>
+                                <td class="text-break">{{ entry.text }}</td>
+                                <td>
+                                    {% if entry.label == 1 %}
+                                        <span class="badge bg-danger">Halucynacja</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Poprawna</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ entry.confidence }}%</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center text-muted py-5">
+                <i class="bi bi-inbox fs-1"></i>
+                <p class="mt-2">Brak zapytan w historii. Sprawdz jakis tekst, a pojawi sie tutaj.</p>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
