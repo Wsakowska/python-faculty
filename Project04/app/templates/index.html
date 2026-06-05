@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}HaluCheck — sprawdz tekst{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="text-center mb-4">
+            <h1><i class="bi bi-shield-check"></i> HaluCheck</h1>
+            <p class="lead text-muted">
+                Wklej tekst wygenerowany przez AI, a model ML oceni,
+                czy moze zawierac halucynacje.
+            </p>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('main.predict_route') }}">
+                    <div class="mb-3">
+                        <label for="text_input" class="form-label fw-bold">
+                            Tekst do sprawdzenia
+                        </label>
+                        <textarea
+                            class="form-control"
+                            id="text_input"
+                            name="text_input"
+                            rows="6"
+                            placeholder="Wklej tutaj tekst wygenerowany przez AI..."
+                            required
+                        >{{ request.form.get('text_input', '') }}</textarea>
+                        <div class="form-text">
+                            Minimalna dlugosc: 10 znakow. Model dziala najlepiej na tekstach w jezyku angielskim
+                            (QA, streszczenia, dialogi).
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-search"></i> Sprawdz
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

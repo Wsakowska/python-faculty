@@ -1,0 +1,30 @@
+/* HaluCheck — style */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+main {
+    flex: 1;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    font-size: 1rem;
+}
+
+.badge {
+    border-radius: 8px;
+}
+
+.progress {
+    border-radius: 8px;
+}

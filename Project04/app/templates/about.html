@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}HaluCheck — o projekcie{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <h2 class="mb-4"><i class="bi bi-info-circle"></i> O projekcie</h2>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5>Czym jest HaluCheck?</h5>
+                <p>
+                    HaluCheck to aplikacja webowa laczaca dwa projekty z przedmiotu
+                    Programowanie w jezyku Python: klasyfikator halucynacji ML (Project03)
+                    oraz interfejs webowy Flask.
+                </p>
+                <p>
+                    Aplikacja pozwala sprawdzic, czy tekst wygenerowany przez model AI
+                    (np. ChatGPT) moze zawierac halucynacje — czyli informacje, ktore
+                    wygladaja wiarygodnie, ale sa nieprawdziwe.
+                </p>
+
+                <h5 class="mt-4">Jak dziala model?</h5>
+                <p>
+                    Model MLP (Multilayer Perceptron) zostal wytrenowany na zbiorze
+                    <strong>HaluEval</strong>, ktory zawiera pary poprawnych i zhalucynowanych
+                    odpowiedzi z roznych domen: QA, dialogi, streszczenia i pytania ogolne.
+                </p>
+                <p>
+                    Cechy wejsciowe to reprezentacja TF-IDF tekstu (unigramy + bigramy,
+                    10 000 cech) uzupelniona o 10 cech inzynierowanych (dlugosc tekstu,
+                    liczba slow, unikalne slowa, interpunkcja itp.).
+                </p>
+
+                <h5 class="mt-4">Ograniczenia</h5>
+                <ul>
+                    <li>Model dziala najlepiej na tekstach w jezyku angielskim.</li>
+                    <li>Trenowany na danych z HaluEval — moze nie generalizowac na inne domeny.</li>
+                    <li>Predykcja to oszacowanie prawdopodobienstwa, nie pewnosc.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
