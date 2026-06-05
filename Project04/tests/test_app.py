@@ -155,3 +155,57 @@ def test_model_loader_returns_dict():
     assert "label_name" in result
     assert result["label"] in (0, 1)
     assert 0.0 <= result["confidence"] <= 1.0
+
+
+# ============================================================
+# TESTY ROZSZERZONYCH FUNKCJI
+# ============================================================
+
+def test_predict_shows_model_panel(client):
+    """Wynik zawiera panel konsylium modeli."""
+    response = client.post("/predict", data={
+        "text_input": "The sun orbits around the Earth once per day."
+    })
+    assert b"Konsylium" in response.data
+    assert b"Glosowanie" in response.data
+
+
+def test_predict_shows_tfidf_words(client):
+    """Wynik zawiera top slowa TF-IDF."""
+    response = client.post("/predict", data={
+        "text_input": "The sun orbits around the Earth once per day."
+    })
+    assert b"Top slowa" in response.data
+
+
+def test_predict_shows_feature_analysis(client):
+    """Wynik zawiera analize cech tekstu."""
+    response = client.post("/predict", data={
+        "text_input": "The sun orbits around the Earth once per day."
+    })
+    assert b"Analiza cech" in response.data
+
+
+def test_predict_all_models_returns_6():
+    """predict_all_models zwraca wyniki dla 6 modeli."""
+    from app.model_loader import predict_all_models
+    results, summary = predict_all_models("Water freezes at zero degrees Celsius.")
+    assert len(results) == 6
+    assert "consensus" in summary
+
+
+def test_analyze_features_returns_10():
+    """analyze_features zwraca 10 cech."""
+    from app.model_loader import analyze_features
+    analysis = analyze_features("Some sample text for feature analysis.")
+    assert len(analysis) == 10
+    assert all("closer_to" in f for f in analysis)
+
+
+def test_top_tfidf_words_returns_list():
+    """get_top_tfidf_words zwraca liste slow z wagami."""
+    from app.model_loader import get_top_tfidf_words
+    words = get_top_tfidf_words("Machine learning is a subset of artificial intelligence.")
+    assert len(words) > 0
+    assert "word" in words[0]
+    assert "weight" in words[0]
