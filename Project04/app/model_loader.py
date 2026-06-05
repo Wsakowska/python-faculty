@@ -1,8 +1,3 @@
-"""
-Ladowanie modelu ML i preprocessing tekstu.
-Odtwarza pipeline z Project03: czyszczenie -> TF-IDF -> cechy numeryczne -> predykcja.
-"""
-
 import os
 import re
 import string
